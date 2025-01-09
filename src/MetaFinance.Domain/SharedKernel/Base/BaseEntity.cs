@@ -2,15 +2,13 @@
 
 public abstract class BaseEntity<TId>
 {
-    public required TId Id { get; init; }
-
+    public TId Id { get; protected set; }
+    
+    protected BaseEntity() { }
+    
     protected BaseEntity(TId id)
     {
         Id = id;
-    }
-
-    protected BaseEntity()
-    {
     }
 
     public override bool Equals(object? obj)

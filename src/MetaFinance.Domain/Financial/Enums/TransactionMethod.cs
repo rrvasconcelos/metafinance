@@ -1,6 +1,6 @@
 ﻿namespace MetaFinance.Domain.Financial.Enums;
 
-public enum PaymentMethod
+public enum TransactionMethod
 {
     Cash,
     CreditCard,

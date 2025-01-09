@@ -7,3 +7,9 @@ public enum CategoryType
     Investment,
     Income
 }
+
+public enum TransactionStatus
+{
+    Paid,       
+    Pending
+}
