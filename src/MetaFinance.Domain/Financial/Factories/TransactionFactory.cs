@@ -11,7 +11,9 @@ public class TransactionFactory
         Money amount,
         TransactionMethod method,
         int categoryId,
-        long userId)
+        bool isInstallment,
+        int? totalInstallments,
+        string userId)
     {
         return Create(
             description,
@@ -20,6 +22,8 @@ public class TransactionFactory
             method,
             TransactionStatus.Pending,
             categoryId,
+            isInstallment,
+            totalInstallments,
             userId);
     }
 
@@ -28,7 +32,9 @@ public class TransactionFactory
         Money amount,
         TransactionMethod method,
         int categoryId,
-        long userId)
+        bool isInstallment,
+        int? totalInstallments,
+        string userId)
     {
         return Create(
             description,
@@ -37,6 +43,8 @@ public class TransactionFactory
             method,
             TransactionStatus.Pending,
             categoryId,
+            isInstallment,
+            totalInstallments,
             userId);
     }
     
@@ -47,7 +55,9 @@ public class TransactionFactory
         TransactionMethod method,
         TransactionStatus status,
         int categoryId,
-        long userId)
+        bool isInstallment,
+        int? totalInstallments,
+        string userId)
     {
         return new Transaction(
             description,
@@ -56,6 +66,8 @@ public class TransactionFactory
             method,
             status,
             categoryId,
+            isInstallment,
+            totalInstallments,
             userId);
     }
 }

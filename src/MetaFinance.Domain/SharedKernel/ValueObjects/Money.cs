@@ -5,10 +5,12 @@ namespace MetaFinance.Domain.SharedKernel.ValueObjects;
 
 public class Money : BaseValueObject
 {
+    private const string DefaultCurrency = "BRL";
+
     public decimal Amount { get; }
     public string Currency { get; }
 
-    public Money(decimal amount, string currency)
+    public Money(decimal amount, string currency = DefaultCurrency)
     {
         if (amount < 0) throw new DomainException("Amount cannot be negative");
         if (string.IsNullOrWhiteSpace(currency)) throw new DomainException("Currency is required");

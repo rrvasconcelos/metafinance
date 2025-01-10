@@ -16,8 +16,11 @@ public class Transaction : AuditableEntity<long>
     public TransactionMethod TransactionMethod { get; private set; }
     public TransactionStatus TransactionStatus { get; private set; }
     public int CategoryId { get; private set; }
-    public long UserId { get; private set; }
+    public string UserId { get; private set; }
+    public bool IsInstallment { get; private set; }
+    public int? TotalInstallments { get; private set; }
 
+    public IReadOnlyCollection<Installment> Installments { get; private set; }
     public Category Category { get; private set; }
 
     public Transaction(
@@ -27,9 +30,11 @@ public class Transaction : AuditableEntity<long>
         TransactionMethod transactionMethod,
         TransactionStatus transactionStatus,
         int categoryId,
-        long userId) : base(userId)
+        bool isInstallment,
+        int? totalInstallments,
+        string userId) : base(userId)
     {
-        ValidateTransaction(description, amount, categoryId, userId);
+        ValidateTransaction(description, amount, categoryId, isInstallment, totalInstallments, userId);
 
         Description = description;
         Amount = amount;
@@ -40,7 +45,13 @@ public class Transaction : AuditableEntity<long>
         UserId = userId;
     }
 
-    private static void ValidateTransaction(string description, Money amount, int categoryId, long userId)
+    private static void ValidateTransaction(
+        string description,
+        Money amount,
+        int categoryId,
+        bool isInstallment,
+        int? totalInstallments,
+        string userId)
     {
         if (string.IsNullOrWhiteSpace(description))
             throw new DomainException("Description is required");
@@ -51,11 +62,14 @@ public class Transaction : AuditableEntity<long>
         if (categoryId <= 0)
             throw new DomainException("Invalid CategoryId");
 
-        if (userId <= 0)
+        if (string.IsNullOrWhiteSpace(userId))
             throw new DomainException("Invalid UserId");
+
+        if (isInstallment && totalInstallments is not > 0)
+            throw new DomainException("Invalid number of installments");
     }
 
-    public void UpdateStatus(TransactionStatus newStatus, long modifiedBy)
+    public void UpdateStatus(TransactionStatus newStatus, string modifiedBy)
     {
         TransactionStatus = newStatus;
         UpdateAudit(modifiedBy);
