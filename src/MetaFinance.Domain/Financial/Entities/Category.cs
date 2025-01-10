@@ -3,23 +3,42 @@ using MetaFinance.Domain.SharedKernel.Base;
 
 namespace MetaFinance.Domain.Financial.Entities;
 
-public class Category : BaseEntity<int>
+public class Category : AuditableEntity<int>
 {
     public string Name { get; private set; }
     public string? Description { get; private set; }
     public CategoryType Type { get; private set; }
     public bool IsActive { get; private set; }
 
-    private Category() { }
+    protected Category() { }
 
-    public Category(string name, CategoryType type, string? description = null)
+    public Category(string name, CategoryType type, string? description, string createdBy) : base(createdBy)
     {
-        Name = name;
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Category name cannot be empty.", nameof(name));
+
+        Name = name.Trim();
         Type = type;
-        Description = description;
+        Description = description?.Trim();
         IsActive = true;
     }
 
     public void Deactivate() => IsActive = false;
+
     public void Activate() => IsActive = true;
+
+    public void Update(string? name, CategoryType? type, string? description, string modifiedBy)
+    {
+        if (!string.IsNullOrWhiteSpace(name))
+            Name = name.Trim();
+
+        if (type.HasValue)
+            Type = type.Value;
+
+        Description = description?.Trim();
+
+        UpdateAudit(modifiedBy);
+    }
 }
+
+

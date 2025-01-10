@@ -11,7 +11,6 @@ public class TransactionFactory
         Money amount,
         TransactionMethod method,
         int categoryId,
-        bool isInstallment,
         int? totalInstallments,
         string userId)
     {
@@ -22,7 +21,6 @@ public class TransactionFactory
             method,
             TransactionStatus.Pending,
             categoryId,
-            isInstallment,
             totalInstallments,
             userId);
     }
@@ -32,7 +30,6 @@ public class TransactionFactory
         Money amount,
         TransactionMethod method,
         int categoryId,
-        bool isInstallment,
         int? totalInstallments,
         string userId)
     {
@@ -43,9 +40,30 @@ public class TransactionFactory
             method,
             TransactionStatus.Pending,
             categoryId,
-            isInstallment,
             totalInstallments,
             userId);
+    }
+    
+    public static Transaction CreateExpenseWithInstallments(
+        string description,
+        Money amount,
+        TransactionMethod method,
+        int categoryId,
+        int totalInstallments,
+        DateTime firstDueDate,
+        string userId)
+    {
+        var transaction = CreateExpense(
+            description,
+            amount,
+            method,
+            categoryId,
+            totalInstallments,
+            userId);
+
+        transaction.AddInstallments(totalInstallments, firstDueDate);
+
+        return transaction;
     }
     
     private static Transaction Create(
@@ -55,7 +73,6 @@ public class TransactionFactory
         TransactionMethod method,
         TransactionStatus status,
         int categoryId,
-        bool isInstallment,
         int? totalInstallments,
         string userId)
     {
@@ -66,7 +83,6 @@ public class TransactionFactory
             method,
             status,
             categoryId,
-            isInstallment,
             totalInstallments,
             userId);
     }

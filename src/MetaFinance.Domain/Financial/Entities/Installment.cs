@@ -15,6 +15,7 @@ public class Installment : AuditableEntity<long>
     public InstallmentStatus Status { get; private set; }
     public DateTime? PaymentDate { get; private set; }
     public string UserId { get; private set; }
+    
     public Transaction Transaction { get; private set; }
 
     public Installment(
@@ -44,9 +45,6 @@ public class Installment : AuditableEntity<long>
         Money amount,
         string userId)
     {
-        if (transactionId <= 0)
-            throw new DomainException("Invalid TransactionId");
-
         if (totalInstallments <= 0)
             throw new DomainException("TotalInstallments must be greater than zero");
 
@@ -74,22 +72,6 @@ public class Installment : AuditableEntity<long>
         Status = InstallmentStatus.Paid;
         PaymentDate = paymentDate;
         UpdateAudit(modifiedBy);
-    }
-
-    public void Cancel(string modifiedBy)
-    {
-        switch (Status)
-        {
-            case InstallmentStatus.Cancelled:
-                throw new DomainException("Installment is already cancelled");
-            case InstallmentStatus.Paid:
-                throw new DomainException("Cannot cancel a paid installment");
-            case InstallmentStatus.Pending:
-            default:
-                Status = InstallmentStatus.Cancelled;
-                UpdateAudit(modifiedBy);
-                break;
-        }
     }
 
     public bool IsOverdue() => Status == InstallmentStatus.Pending && DueDate.Date < DateTime.UtcNow.Date;
