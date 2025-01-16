@@ -15,7 +15,7 @@ public class Installment : AuditableEntity<long>
     public InstallmentStatus Status { get; private set; }
     public DateTime? PaymentDate { get; private set; }
     public string UserId { get; private set; }
-    
+
     public Transaction Transaction { get; private set; }
 
     public Installment(

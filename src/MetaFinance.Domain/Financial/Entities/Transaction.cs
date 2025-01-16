@@ -26,7 +26,6 @@ public class Transaction : AuditableEntity<long>, IAggregateRoot
 
     protected Transaction()
     {
-        
     }
 
     public Transaction(
@@ -88,16 +87,14 @@ public class Transaction : AuditableEntity<long>, IAggregateRoot
             var dueDate = firstDueDate.AddMonths(i - 1);
             var amount = i == totalInstallments ? remainingAmount : installmentAmountValue;
 
-            installments.Add(new Installment(this.
-                Id, 
-                i, 
-                totalInstallments, 
-                dueDate, 
-                new Money(amount), 
+            installments.Add(new Installment(this.Id,
+                i,
+                totalInstallments,
+                dueDate,
+                new Money(amount),
                 UserId));
         }
 
         Installments = installments;
     }
 }
-
