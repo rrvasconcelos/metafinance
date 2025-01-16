@@ -5,5 +5,6 @@ public enum CategoryType
     Essential,
     NonEssential,
     Investment,
-    Income
+    Income,
+    Expense
 }

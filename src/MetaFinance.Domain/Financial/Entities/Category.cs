@@ -1,9 +1,11 @@
 ﻿using MetaFinance.Domain.Financial.Enums;
+using MetaFinance.Domain.SharedKernel.Aggregates;
 using MetaFinance.Domain.SharedKernel.Base;
+using MetaFinance.Domain.SharedKernel.Exceptions;
 
 namespace MetaFinance.Domain.Financial.Entities;
 
-public class Category : AuditableEntity<int>
+public class Category : AuditableEntity<int>, IAggregateRoot
 {
     public string Name { get; private set; }
     public string? Description { get; private set; }
@@ -12,32 +14,79 @@ public class Category : AuditableEntity<int>
 
     protected Category() { }
 
-    public Category(string name, CategoryType type, string? description, string createdBy) : base(createdBy)
+    public Category(string name, CategoryType type, string? description, string createdBy) 
+        : base(createdBy)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Category name cannot be empty.", nameof(name));
-
+        ValidateCategory(name, type);
+        
         Name = name.Trim();
         Type = type;
         Description = description?.Trim();
         IsActive = true;
     }
 
-    public void Deactivate() => IsActive = false;
-
-    public void Activate() => IsActive = true;
-
     public void Update(string? name, CategoryType? type, string? description, string modifiedBy)
     {
         if (!string.IsNullOrWhiteSpace(name))
+        {
+            ValidateName(name);
             Name = name.Trim();
+        }
 
         if (type.HasValue)
+        {
+            ValidateType(type.Value);
             Type = type.Value;
+        }
 
         Description = description?.Trim();
-
         UpdateAudit(modifiedBy);
+    }
+
+    public void Deactivate(string modifiedBy)
+    {
+        IsActive = false;
+        UpdateAudit(modifiedBy);
+    }
+
+    public void Activate(string modifiedBy)
+    {
+        IsActive = true;
+        UpdateAudit(modifiedBy);
+    }
+    
+    public bool CanBeUsedInTransaction(TransactionType transactionType)
+    {
+        if (!IsActive)
+            return false;
+
+        return (transactionType, Type) switch
+        {
+            (TransactionType.Income, CategoryType.Income) => true,
+            (TransactionType.Expense, CategoryType.Expense) => true,
+            _ => false
+        };
+    }
+
+    private static void ValidateCategory(string name, CategoryType type)
+    {
+        ValidateName(name);
+        ValidateType(type);
+    }
+
+    private static void ValidateName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new DomainException("Category name cannot be empty.");
+            
+        if (name.Length > 100)
+            throw new DomainException("Category name cannot exceed 100 characters.");
+    }
+
+    private static void ValidateType(CategoryType type)
+    {
+        if (!Enum.IsDefined(typeof(CategoryType), type))
+            throw new DomainException("Invalid category type.");
     }
 }
 

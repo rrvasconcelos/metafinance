@@ -19,10 +19,9 @@ public class Transaction : AuditableEntity<long>, IAggregateRoot
     public int? TotalInstallments { get; private set; }
     public int CategoryId { get; private set; }
     public string UserId { get; private set; }
-    public IReadOnlyCollection<Installment> Installments { get; private set; } = new List<Installment>();
-    public Category Category { get; private set; }
-
     public bool IsInstallment => TotalInstallments is > 1;
+    public IReadOnlyCollection<Installment> Installments { get; private set; } = [];
+    public Category Category { get; private set; }
 
     protected Transaction()
     {
@@ -69,7 +68,7 @@ public class Transaction : AuditableEntity<long>, IAggregateRoot
         if (string.IsNullOrWhiteSpace(userId))
             throw new DomainException("Invalid UserId.");
 
-        if (totalInstallments is <= 0)
+        if (totalInstallments is <= 1)
             throw new DomainException("Invalid number of installments.");
     }
 

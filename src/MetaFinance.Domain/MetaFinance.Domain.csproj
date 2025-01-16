@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Financial\Interfaces\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>
