@@ -1,6 +1,6 @@
 ﻿using MetaFinance.Domain.Financial.Entities;
 
-namespace MetaFinance.Domain.Interfaces;
+namespace MetaFinance.Domain.Financial.Interfaces;
 
 public interface ITransactionRepository
 {
