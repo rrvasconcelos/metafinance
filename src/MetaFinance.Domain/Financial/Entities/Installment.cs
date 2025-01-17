@@ -17,6 +17,8 @@ public class Installment : AuditableEntity<long>
     public string UserId { get; private set; }
 
     public Transaction Transaction { get; private set; }
+    
+    private Installment(): base("userId") { }
 
     public Installment(
         long transactionId,
@@ -26,6 +28,9 @@ public class Installment : AuditableEntity<long>
         Money amount,
         string userId) : base(userId)
     {
+        if (string.IsNullOrWhiteSpace(userId))
+            throw new DomainException("Invalid UserId for audit.");
+        
         ValidateInstallment(transactionId, installmentNumber, totalInstallments, dueDate, amount, userId);
 
         TransactionId = transactionId;
@@ -45,34 +50,44 @@ public class Installment : AuditableEntity<long>
         Money amount,
         string userId)
     {
+        var errors = new List<string>();
+
         if (totalInstallments <= 0)
-            throw new DomainException("TotalInstallments must be greater than zero");
+            errors.Add("TotalInstallments must be greater than zero.");
 
         if (installmentNumber <= 0 || installmentNumber > totalInstallments)
-            throw new DomainException("Invalid InstallmentNumber");
+            errors.Add("Invalid InstallmentNumber.");
 
         if (dueDate < DateTime.UtcNow.Date)
-            throw new DomainException("DueDate cannot be in the past");
+            errors.Add("DueDate cannot be in the past.");
 
         if (amount.Amount <= 0)
-            throw new DomainException("Amount must be greater than zero");
+            errors.Add("Amount must be greater than zero.");
 
         if (string.IsNullOrWhiteSpace(userId))
-            throw new DomainException("Invalid UserId");
+            errors.Add("Invalid UserId.");
+
+        if (errors.Count != 0)
+            throw new DomainException(string.Join(" ", errors));
     }
 
     public void MarkAsPaid(DateTime paymentDate, string modifiedBy)
     {
-        if (Status == InstallmentStatus.Paid)
-            throw new DomainException("Installment is already paid");
-
-        if (paymentDate.Date > DateTime.UtcNow.Date)
-            throw new DomainException("Payment date cannot be in the future");
+        ValidateMarkAsPaid(paymentDate);
 
         Status = InstallmentStatus.Paid;
         PaymentDate = paymentDate;
         UpdateAudit(modifiedBy);
     }
+    
+    private void ValidateMarkAsPaid(DateTime paymentDate)
+    {
+        if (Status == InstallmentStatus.Paid)
+            throw new DomainException("Installment is already paid.");
 
-    public bool IsOverdue() => Status == InstallmentStatus.Pending && DueDate.Date < DateTime.UtcNow.Date;
+        if (paymentDate.Date > DateTime.UtcNow.Date)
+            throw new DomainException("Payment date cannot be in the future.");
+    }
+
+    public bool IsOverdue => Status == InstallmentStatus.Pending && DueDate.Date < DateTime.UtcNow.Date;
 }

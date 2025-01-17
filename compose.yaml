@@ -1,0 +1,6 @@
+﻿services:
+  metafinance.api:
+    image: metafinance.api
+    build:
+      context: .
+      dockerfile: src/MetaFinance.Api/Dockerfile

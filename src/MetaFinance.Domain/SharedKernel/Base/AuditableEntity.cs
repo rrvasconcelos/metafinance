@@ -7,8 +7,6 @@ public abstract class AuditableEntity<TId> : BaseEntity<TId>
     public DateTime? LastModifiedAt { get; private set; }
     public string? LastModifiedBy { get; private set; }
         
-    protected AuditableEntity() { }
-        
     protected AuditableEntity(string createdBy)
     {
         if (string.IsNullOrWhiteSpace(createdBy))

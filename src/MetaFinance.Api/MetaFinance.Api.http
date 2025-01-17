@@ -1,0 +1,6 @@
+@MetaFinance.Api_HostAddress = http://localhost:5166
+
+GET {{MetaFinance.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

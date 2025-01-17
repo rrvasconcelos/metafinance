@@ -9,6 +9,8 @@ public class Money : BaseValueObject
 
     public decimal Amount { get; }
     public string Currency { get; }
+    
+    public Money() : this(0, DefaultCurrency) { }
 
     public Money(decimal amount, string currency = DefaultCurrency)
     {

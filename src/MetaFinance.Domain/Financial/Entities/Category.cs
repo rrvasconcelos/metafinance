@@ -7,12 +7,12 @@ namespace MetaFinance.Domain.Financial.Entities;
 
 public class Category : AuditableEntity<int>, IAggregateRoot
 {
-    public string Name { get; private set; }
+    public string Name { get; private set; } = string.Empty;
     public string? Description { get; private set; }
     public CategoryType Type { get; private set; }
     public bool IsActive { get; private set; }
 
-    protected Category() { }
+    protected Category(): base("default_user") { }
 
     public Category(string name, CategoryType type, string? description, string createdBy) 
         : base(createdBy)

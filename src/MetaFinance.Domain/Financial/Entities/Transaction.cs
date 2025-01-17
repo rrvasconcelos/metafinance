@@ -8,7 +8,7 @@ namespace MetaFinance.Domain.Financial.Entities;
 
 public class Transaction : AuditableEntity<long>, IAggregateRoot
 {
-    public string Description { get; private set; }
+    public  string Description { get; private set; } = string.Empty;
     public Money Amount { get; private set; }
     public DateTime CreatedDate { get; private set; } = DateTime.UtcNow;
     public int Month => CreatedDate.Month;
@@ -23,7 +23,7 @@ public class Transaction : AuditableEntity<long>, IAggregateRoot
     public IReadOnlyCollection<Installment> Installments { get; private set; } = [];
     public Category Category { get; private set; }
 
-    protected Transaction()
+    protected Transaction():base("default_user") 
     {
     }
 
