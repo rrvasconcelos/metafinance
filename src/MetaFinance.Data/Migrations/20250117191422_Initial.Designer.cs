@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MetaFinance.Data.Migrations
 {
     [DbContext(typeof(MetaFinanceContext))]
-    [Migration("20250117190022_Initial")]
+    [Migration("20250117191422_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
