@@ -1,4 +1,7 @@
 using MetaFinance.Data;
+using MetaFinance.Domain.Financial.Entities;
+using MetaFinance.Domain.Financial.Enums;
+using MetaFinance.Domain.Financial.Interfaces.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +23,7 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/weatherforecast",  () =>
     {
         var forecast = Enumerable.Range(1, 5).Select(index =>
                 new WeatherForecast

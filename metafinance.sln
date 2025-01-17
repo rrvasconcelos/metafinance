@@ -20,6 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		compose.yaml = compose.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{7F544DEC-288D-4DD6-9663-729D4E447FBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaFinance.Application", "src\MetaFinance.Application\MetaFinance.Application.csproj", "{F85065B9-7E12-4155-9B75-8FA147ABE15F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,10 @@ Global
 		{27B985FE-C150-4742-8404-DC81B1E9BC03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27B985FE-C150-4742-8404-DC81B1E9BC03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27B985FE-C150-4742-8404-DC81B1E9BC03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F85065B9-7E12-4155-9B75-8FA147ABE15F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F85065B9-7E12-4155-9B75-8FA147ABE15F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F85065B9-7E12-4155-9B75-8FA147ABE15F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F85065B9-7E12-4155-9B75-8FA147ABE15F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,5 +54,6 @@ Global
 		{BEE0ACBD-496B-437B-B56A-FBDF8AA98D67} = {8E8A07CA-FF2E-46B6-B8A5-B32E8B3A81E9}
 		{13A62035-05D5-4917-BE84-15F2D0EB2E13} = {48F9A208-DC86-4284-A30B-16E6106C1A39}
 		{27B985FE-C150-4742-8404-DC81B1E9BC03} = {9E8EF06A-8F9C-40E8-B581-5E503DF1390D}
+		{F85065B9-7E12-4155-9B75-8FA147ABE15F} = {7F544DEC-288D-4DD6-9663-729D4E447FBE}
 	EndGlobalSection
 EndGlobal
