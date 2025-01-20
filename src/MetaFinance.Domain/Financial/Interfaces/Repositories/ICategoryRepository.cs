@@ -8,7 +8,7 @@ public interface ICategoryRepository
     Task<Category> UpdateAsync(Category category);
     Task DeleteAsync(Category category);
     
-    Task<IEnumerable<Category>> GetAllAsync();
+    Task<IEnumerable<Category>> GetAllAsync(CancellationToken cancellationToken);
     Task<Category?> GetByIdAsync(Guid id);
     Task<Category?> GetByNameAsync(string name);
 }

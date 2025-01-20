@@ -52,12 +52,12 @@ public class CategoryRepository(MetaFinanceContext context):ICategoryRepository
         }
     }
 
-    public async Task<IEnumerable<Category>> GetAllAsync()
+    public async Task<IEnumerable<Category>> GetAllAsync(CancellationToken cancellationToken)
     {
         return await context
             .Categories
             .AsNoTracking()
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
     }
 
     public async Task<Category?> GetByIdAsync(Guid id)

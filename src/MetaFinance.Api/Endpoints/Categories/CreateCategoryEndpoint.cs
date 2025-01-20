@@ -10,8 +10,8 @@ public class CreateCategoryEndpoint : IEndpoint
     public static void Map(IEndpointRouteBuilder app)
         => app.MapPost("/", HandleAsync)
             .WithName("Categories: Create")
-            .WithSummary("Cria uma nova categoria")
-            .WithDescription("Cria uma nova categoria")
+            .WithSummary("Create a new category")
+            .WithDescription("Create a new category")
             .WithOrder(1)
             .Produces<Result<CreateCategoryCommandResponse>>();
     

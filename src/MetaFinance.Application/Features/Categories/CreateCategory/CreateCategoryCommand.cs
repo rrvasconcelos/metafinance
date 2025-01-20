@@ -2,7 +2,6 @@
 using MediatR;
 using MetaFinance.Domain.Financial.Entities;
 using MetaFinance.Domain.Financial.Enums;
-using MetaFinance.Domain.Financial.Interfaces.Repositories;
 using MetaFinance.Domain.Financial.Interfaces.UnitOfWork;
 
 namespace MetaFinance.Application.Features.Categories.CreateCategory;
@@ -26,7 +25,6 @@ public class CreateCategoryCommandHandler(ICategoryUnitOfWork categoryUnitOfWork
             "default_user");
 
         await categoryUnitOfWork.Categories.CreateAsync(category);
-        
         await categoryUnitOfWork.SaveChangesAsync(cancellationToken);
         
         return Result.Ok(new CreateCategoryCommandResponse
