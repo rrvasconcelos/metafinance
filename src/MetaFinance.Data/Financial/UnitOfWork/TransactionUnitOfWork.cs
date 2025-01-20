@@ -2,10 +2,10 @@
 using MetaFinance.Domain.Financial.Interfaces.Repositories;
 using MetaFinance.Domain.Financial.Interfaces.UnitOfWork;
 
-namespace MetaFinance.Data.UnitOfWork;
+namespace MetaFinance.Data.Financial.UnitOfWork;
 
-public class FinancialUnitOfWork(MetaFinanceContext context, ITransactionRepository repository)
-    : IFinancialUnitOfWork
+public class TransactionUnitOfWork(MetaFinanceContext context, ITransactionRepository repository)
+    : ITransactionUnitOfWork
 {
     public ITransactionRepository Transactions { get; } = repository;
 

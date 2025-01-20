@@ -3,7 +3,7 @@ using MetaFinance.Domain.SharedKernel.UnitOfWork;
 
 namespace MetaFinance.Domain.Financial.Interfaces.UnitOfWork;
 
-public interface IFinancialUnitOfWork : IUnitOfWork
+public interface ITransactionUnitOfWork : IUnitOfWork
 {
     ITransactionRepository Transactions { get; } 
 }

@@ -54,19 +54,6 @@ public class Category : AuditableEntity<int>, IAggregateRoot
         IsActive = true;
         UpdateAudit(modifiedBy);
     }
-    
-    public bool CanBeUsedInTransaction(TransactionType transactionType)
-    {
-        if (!IsActive)
-            return false;
-
-        return (transactionType, Type) switch
-        {
-            (TransactionType.Income, CategoryType.Income) => true,
-            (TransactionType.Expense, CategoryType.Expense) => true,
-            _ => false
-        };
-    }
 
     private static void ValidateCategory(string name, CategoryType type)
     {

@@ -2,7 +2,7 @@
 using MetaFinance.Domain.Financial.Interfaces.Repositories;
 using MetaFinance.Domain.Financial.Interfaces.UnitOfWork;
 
-namespace MetaFinance.Data.UnitOfWork;
+namespace MetaFinance.Data.Financial.UnitOfWork;
 
 public class CategoryUnitOfWork(MetaFinanceContext context, ICategoryRepository repository)
     : ICategoryUnitOfWork

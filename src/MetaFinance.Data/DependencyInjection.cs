@@ -1,6 +1,6 @@
 ﻿using MetaFinance.Data.Context;
 using MetaFinance.Data.Financial.Repositories;
-using MetaFinance.Data.UnitOfWork;
+using MetaFinance.Data.Financial.UnitOfWork;
 using MetaFinance.Domain.Financial.Interfaces.Repositories;
 using MetaFinance.Domain.Financial.Interfaces.UnitOfWork;
 using Microsoft.EntityFrameworkCore;

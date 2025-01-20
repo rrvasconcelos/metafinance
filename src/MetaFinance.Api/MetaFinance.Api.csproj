@@ -22,6 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MetaFinance.Application\MetaFinance.Application.csproj" />
       <ProjectReference Include="..\MetaFinance.Data\MetaFinance.Data.csproj" />
       <ProjectReference Include="..\MetaFinance.Domain\MetaFinance.Domain.csproj" />
     </ItemGroup>
