@@ -4,6 +4,7 @@ using MetaFinance.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MetaFinance.Data.Migrations
 {
     [DbContext(typeof(MetaFinanceContext))]
-    partial class MetaFinanceContextModelSnapshot : ModelSnapshot
+    [Migration("20250120204326_AddMaxLenghtNameCategory")]
+    partial class AddMaxLenghtNameCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

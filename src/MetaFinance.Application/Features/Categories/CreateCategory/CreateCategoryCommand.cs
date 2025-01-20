@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using Mapster;
 using MediatR;
 using MetaFinance.Domain.Financial.Entities;
 using MetaFinance.Domain.Financial.Enums;
@@ -26,14 +27,9 @@ public class CreateCategoryCommandHandler(ICategoryUnitOfWork categoryUnitOfWork
 
         await categoryUnitOfWork.Categories.CreateAsync(category);
         await categoryUnitOfWork.SaveChangesAsync(cancellationToken);
+
+        var response = category.Adapt<CreateCategoryCommandResponse>();
         
-        return Result.Ok(new CreateCategoryCommandResponse
-        {
-            Id = category.Id,
-            Name = category.Name,
-            Description = category.Description,
-            Type = category.Type,
-            IsActive = category.IsActive
-        });
+        return Result.Ok(response);
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MetaFinance.Data.Migrations
 {
     [DbContext(typeof(MetaFinanceContext))]
-    [Migration("20250117191422_Initial")]
+    [Migration("20250120203714_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -42,7 +42,6 @@ namespace MetaFinance.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 

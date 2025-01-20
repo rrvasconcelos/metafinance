@@ -15,8 +15,11 @@ public class CategoryMapping : IEntityTypeConfiguration<Category>
         builder.Property(x => x.Id)
             .ValueGeneratedOnAdd();
         
-        builder.Property(x => x.Description)
+        builder.Property(e => e.Name)
             .IsRequired()
+            .HasMaxLength(100);
+        
+        builder.Property(x => x.Description)
             .HasMaxLength(300);
         
         builder.Property(x => x.Type)
