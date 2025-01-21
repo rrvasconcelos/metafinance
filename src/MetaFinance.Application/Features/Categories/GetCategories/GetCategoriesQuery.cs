@@ -5,7 +5,7 @@ using MetaFinance.Domain.Financial.Interfaces.Repositories;
 
 namespace MetaFinance.Application.Features.Categories.GetCategories;
 
-public class GetCategoriesQuery : IRequest<Result<IEnumerable<GetCategoriesQueryResponse>>>
+public record GetCategoriesQuery : IRequest<Result<IEnumerable<GetCategoriesQueryResponse>>>
 {
 }
 
