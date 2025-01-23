@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using Mapster;
 using MediatR;
+using MetaFinance.Application.Validation;
 using MetaFinance.Domain.Financial.Entities;
 using MetaFinance.Domain.Financial.Enums;
 using MetaFinance.Domain.Financial.Interfaces.UnitOfWork;
@@ -8,7 +9,7 @@ using MetaFinance.Domain.Financial.Interfaces.UnitOfWork;
 namespace MetaFinance.Application.Features.Categories.CreateCategory;
 
 public record CreateCategoryCommand(string Name, string? Description, CategoryType Type) 
-    : IRequest<Result<CreateCategoryCommandResponse>>;
+    : IRequest<Result<CreateCategoryCommandResponse>>, ICategoryCommand;
 
 public class CreateCategoryCommandHandler(ICategoryUnitOfWork categoryUnitOfWork)
     : IRequestHandler<CreateCategoryCommand, Result<CreateCategoryCommandResponse>>
@@ -17,6 +18,14 @@ public class CreateCategoryCommandHandler(ICategoryUnitOfWork categoryUnitOfWork
         CreateCategoryCommand request,
         CancellationToken cancellationToken)
     {
+        var categoryExist = await categoryUnitOfWork.Categories
+            .ExistsByNameAsync(request.Name, cancellationToken);
+
+        if (categoryExist)
+        {
+            return Result.Fail(new CategoryAlreadyExistsError(request.Name));
+        }
+        
         var category = new Category(
             request.Name,
             request.Type,

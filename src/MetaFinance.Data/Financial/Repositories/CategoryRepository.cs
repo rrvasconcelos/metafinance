@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MetaFinance.Data.Financial.Repositories;
 
-public class CategoryRepository(MetaFinanceContext context):ICategoryRepository
+public class CategoryRepository(MetaFinanceContext context) : ICategoryRepository
 {
     public async Task<Category> CreateAsync(Category category)
     {
@@ -16,7 +16,7 @@ public class CategoryRepository(MetaFinanceContext context):ICategoryRepository
 
             return category;
         }
-        catch (DbUpdateException ex) 
+        catch (DbUpdateException ex)
         {
             throw new TransactionPersistenceException("Error adding transaction.", ex);
         }
@@ -29,10 +29,10 @@ public class CategoryRepository(MetaFinanceContext context):ICategoryRepository
             context.Categories.Update(category);
 
             await Task.CompletedTask;
-            
+
             return category;
         }
-        catch (DbUpdateException ex) 
+        catch (DbUpdateException ex)
         {
             throw new TransactionPersistenceException("Error adding transaction.", ex);
         }
@@ -46,7 +46,7 @@ public class CategoryRepository(MetaFinanceContext context):ICategoryRepository
 
             await Task.CompletedTask;
         }
-        catch (DbUpdateException ex) 
+        catch (DbUpdateException ex)
         {
             throw new TransactionPersistenceException("Error adding transaction.", ex);
         }
@@ -60,17 +60,26 @@ public class CategoryRepository(MetaFinanceContext context):ICategoryRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<Category?> GetByIdAsync(Guid id)
+    public async Task<Category?> GetByIdAsync(int id)
     {
         return await context
             .Categories
             .FindAsync(id);
     }
 
-    public async Task<Category?> GetByNameAsync(string name)
+    public async Task<bool> ExistsByNameAsync(string name, CancellationToken cancellationToken)
     {
         return await context
             .Categories
-            .FirstOrDefaultAsync(c => c.Name == name);
+            .AsNoTracking()
+            .AnyAsync(c => c.Name == name, cancellationToken);
+    }
+
+    public async Task<bool> ExistsByNameAndDifferentIdAsync(string name, int currentId, CancellationToken cancellationToken)
+    {
+        return await context.Categories.AnyAsync(c => 
+                EF.Functions.Like(c.Name, name) &&  
+                c.Id != currentId, 
+            cancellationToken);
     }
 }

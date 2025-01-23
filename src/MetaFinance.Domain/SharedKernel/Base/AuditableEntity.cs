@@ -17,7 +17,7 @@ public abstract class AuditableEntity<TId> : BaseEntity<TId>
 
     protected void UpdateAudit(string modifiedBy)
     {
-        LastModifiedAt = DateTime.UtcNow;
+        LastModifiedAt = DateTime.Now;
         LastModifiedBy = modifiedBy;
     }
 }

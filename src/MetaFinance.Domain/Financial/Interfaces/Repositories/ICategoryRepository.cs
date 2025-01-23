@@ -9,6 +9,7 @@ public interface ICategoryRepository
     Task DeleteAsync(Category category);
     
     Task<IEnumerable<Category>> GetAllAsync(CancellationToken cancellationToken);
-    Task<Category?> GetByIdAsync(Guid id);
-    Task<Category?> GetByNameAsync(string name);
+    Task<Category?> GetByIdAsync(int id);
+    Task<bool> ExistsByNameAsync(string name, CancellationToken cancellationToken);
+    Task<bool> ExistsByNameAndDifferentIdAsync(string name, int currentId, CancellationToken cancellationToken);
 }

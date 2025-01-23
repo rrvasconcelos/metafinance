@@ -25,6 +25,9 @@ public class Transaction : AuditableEntity<long>, IAggregateRoot
 
     protected Transaction():base("default_user") 
     {
+        Amount = Money.Zero;
+        UserId = "default_user";
+        Category = null!; // Use apenas se tiver certeza que será setado pelo EF
     }
 
     public Transaction(
@@ -47,6 +50,7 @@ public class Transaction : AuditableEntity<long>, IAggregateRoot
         CategoryId = categoryId;
         UserId = userId;
         TotalInstallments = totalInstallments;
+        Category = null!;
     }
 
     private static void ValidateTransaction(

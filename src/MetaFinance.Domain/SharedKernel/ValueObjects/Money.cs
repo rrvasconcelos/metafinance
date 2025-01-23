@@ -9,6 +9,8 @@ public class Money : BaseValueObject
 
     public decimal Amount { get; }
     public string Currency { get; }
+
+    public static Money Zero => new(0, DefaultCurrency);
     
     public Money() : this(0, DefaultCurrency) { }
 
@@ -34,4 +36,19 @@ public class Money : BaseValueObject
         
         return new Money(a.Amount + b.Amount, a.Currency);
     }
+
+    public static Money operator -(Money a, Money b)
+    {
+        if (a.Currency != b.Currency)
+            throw new DomainException("Cannot subtract different currencies");
+        
+        return new Money(a.Amount - b.Amount, a.Currency);
+    }
+
+    public static Money operator *(Money a, decimal multiplier)
+    {
+        return new Money(a.Amount * multiplier, a.Currency);
+    }
+
+    public bool IsZero() => Amount == 0;
 }

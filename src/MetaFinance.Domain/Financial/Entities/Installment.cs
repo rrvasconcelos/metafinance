@@ -17,8 +17,13 @@ public class Installment : AuditableEntity<long>
     public string UserId { get; private set; }
 
     public Transaction Transaction { get; private set; }
-    
-    private Installment(): base("userId") { }
+
+    private Installment() : base("userId")
+    {
+        Amount = Money.Zero; // Assumindo que você tem um valor padrão
+        UserId = "default";
+        Transaction = null!; // Use isso apenas se tiver certeza que será setado pelo EF
+    }
 
     public Installment(
         long transactionId,
@@ -40,6 +45,7 @@ public class Installment : AuditableEntity<long>
         Amount = amount;
         Status = InstallmentStatus.Pending;
         UserId = userId;
+        Transaction = null!;
     }
 
     private static void ValidateInstallment(

@@ -13,6 +13,7 @@ public static class Endpoint
         endpoints.MapGroup("v1/categories")
             .WithTags("Categories")
             .MapEndpoint<CreateCategoryEndpoint>()
+            .MapEndpoint<UpdateCategoryEndpoint>()
             .MapEndpoint<GetAllCategoriesEndpoint>();
     }
     
