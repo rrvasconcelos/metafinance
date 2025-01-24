@@ -17,6 +17,9 @@ public abstract class AuditableEntity<TId> : BaseEntity<TId>
 
     protected void UpdateAudit(string modifiedBy)
     {
+        if (string.IsNullOrWhiteSpace(modifiedBy))
+            throw new ArgumentException("modifiedBy cannot be null or empty.", nameof(modifiedBy));
+        
         LastModifiedAt = DateTime.Now;
         LastModifiedBy = modifiedBy;
     }

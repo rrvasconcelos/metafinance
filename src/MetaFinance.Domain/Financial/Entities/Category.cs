@@ -12,13 +12,15 @@ public class Category : AuditableEntity<int>, IAggregateRoot
     public CategoryType Type { get; private set; }
     public bool IsActive { get; private set; }
 
-    protected Category(): base("default_user") { }
+    protected Category() : base("default_user")
+    {
+    }
 
-    public Category(string name, CategoryType type, string? description, string createdBy) 
+    public Category(string name, CategoryType type, string? description, string createdBy)
         : base(createdBy)
     {
         ValidateCategory(name, type);
-        
+
         Name = name.Trim();
         Type = type;
         Description = description?.Trim();
@@ -27,9 +29,10 @@ public class Category : AuditableEntity<int>, IAggregateRoot
 
     public void Update(string? name, CategoryType? type, string? description, string modifiedBy)
     {
-        if (!string.IsNullOrWhiteSpace(name))
+        ValidateName(name);
+        
+        if (name is not null)
         {
-            ValidateName(name);
             Name = name.Trim();
         }
 
@@ -61,20 +64,18 @@ public class Category : AuditableEntity<int>, IAggregateRoot
         ValidateType(type);
     }
 
-    private static void ValidateName(string name)
+    private static void ValidateName(string? name)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new DomainException("Category name cannot be empty.");
-            
+
         if (name.Length > 100)
             throw new DomainException("Category name cannot exceed 100 characters.");
     }
 
     private static void ValidateType(CategoryType type)
     {
-        if (!Enum.IsDefined(typeof(CategoryType), type))
+        if (!Enum.IsDefined(type))
             throw new DomainException("Invalid category type.");
     }
 }
-
-
