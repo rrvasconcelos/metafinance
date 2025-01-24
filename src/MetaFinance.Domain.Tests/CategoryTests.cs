@@ -12,7 +12,7 @@ public class CategoryTests
         public const CategoryType DefaultType = CategoryType.Expense;
     }
 
-    private static Category CreateValidCategory(
+    public static Category CreateValidCategory(
         string name = TestConstants.ValidName,
         CategoryType type = TestConstants.DefaultType,
         string? description = TestConstants.ValidDescription,
