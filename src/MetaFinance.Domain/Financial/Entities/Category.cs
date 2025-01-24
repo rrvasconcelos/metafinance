@@ -29,10 +29,9 @@ public class Category : AuditableEntity<int>, IAggregateRoot
 
     public void Update(string? name, CategoryType? type, string? description, string modifiedBy)
     {
-        ValidateName(name);
-        
         if (name is not null)
         {
+            ValidateName(name);
             Name = name.Trim();
         }
 
@@ -42,7 +41,11 @@ public class Category : AuditableEntity<int>, IAggregateRoot
             Type = type.Value;
         }
 
-        Description = description?.Trim();
+        if (description is not null)
+        {
+            Description = description.Trim();
+        }
+
         UpdateAudit(modifiedBy);
     }
 

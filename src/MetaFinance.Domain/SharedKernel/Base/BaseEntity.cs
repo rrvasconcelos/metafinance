@@ -2,7 +2,7 @@
 
 public abstract class BaseEntity<TId>
 {
-    public TId Id { get; private set; } = default!;
+    public TId Id { get; } = default!;
 
     public override bool Equals(object? obj)
     {
