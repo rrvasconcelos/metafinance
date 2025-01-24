@@ -400,13 +400,14 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Coverage files
-**/coverage/
+[Cc]overage/
+[Cc]overagereport/
+*.cobertura.xml
+*.opencover.xml
+coverage.*
+coverage/
+coveragereport/
+**/[Cc]overage/
+**/[Cc]overagereport/
 **/coverage.*
-**/coveragereport/
-coverage.json
-coverage.cobertura.xml
-coverage.opencover.xml
-
-# Test Results
 TestResults/
-[Tt]est[Rr]esult*/
