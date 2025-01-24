@@ -24,7 +24,7 @@ public class AuditableBehavior
     public void Constructor_Should_ThrowException_WhenCreatedByIsNull()
     {
         Assert.Throws<ArgumentException>(() =>
-            new TestableAuditableEntity(null));
+            new TestableAuditableEntity(null!));
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public class AuditableBehavior
 
         // Act & Assert
         Assert.Throws<ArgumentException>(() =>
-            entity.TestUpdateAudit(null));
+            entity.TestUpdateAudit(null!));
     }
 
     [Fact]
