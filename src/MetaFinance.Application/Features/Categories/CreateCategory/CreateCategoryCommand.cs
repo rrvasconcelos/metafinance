@@ -8,7 +8,7 @@ using MetaFinance.Domain.Financial.Interfaces.UnitOfWork;
 
 namespace MetaFinance.Application.Features.Categories.CreateCategory;
 
-public record CreateCategoryCommand(string Name, string? Description, CategoryType Type) 
+public sealed record CreateCategoryCommand(string Name, string? Description, CategoryType Type) 
     : IRequest<Result<CreateCategoryCommandResponse>>, ICategoryCommand;
 
 public class CreateCategoryCommandHandler(ICategoryUnitOfWork categoryUnitOfWork)

@@ -9,7 +9,7 @@ using MetaFinance.Domain.SharedKernel.ValueObjects;
 
 namespace MetaFinance.Application.Features.Transactions.CreateTransaction;
 
-public record CreateTransactionCommand(
+public sealed record CreateTransactionCommand(
     string Description,
     decimal Value,
     TransactionType Type,
@@ -50,6 +50,14 @@ public record CreateTransactionCommand(
                     request.Method,
                     request.CategoryId,
                     request.TotalInstallments,
+                    request.UserId),
+                TransactionType.InstallmentExpense => TransactionFactory.CreateExpenseWithInstallments(
+                    request.Description,
+                    new Money(request.Value),
+                    request.Method,
+                    request.CategoryId,
+                    request.TotalInstallments!.Value,
+                    DateTime.UtcNow,
                     request.UserId),
                 _ => throw new ArgumentOutOfRangeException(nameof(request), request.Type, "Invalid transaction type.")
             };
