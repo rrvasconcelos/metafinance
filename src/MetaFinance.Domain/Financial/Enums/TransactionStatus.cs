@@ -2,6 +2,6 @@
 
 public enum TransactionStatus
 {
-    Paid,       
+    Paid = 1,       
     Pending
 }

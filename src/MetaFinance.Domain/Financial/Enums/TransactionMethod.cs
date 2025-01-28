@@ -2,7 +2,7 @@
 
 public enum TransactionMethod
 {
-    Cash,
+    Cash = 1,
     CreditCard,
     DebitCard,
     BankTransfer,

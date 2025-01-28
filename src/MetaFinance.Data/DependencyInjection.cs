@@ -19,7 +19,9 @@ public static class DependencyInjection
 
         services.AddScoped<ITransactionRepository, TransactionRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        
         services.AddScoped<ICategoryUnitOfWork, CategoryUnitOfWork>();
+        services.AddScoped<ITransactionUnitOfWork, TransactionUnitOfWork>();
 
         return services;
     }

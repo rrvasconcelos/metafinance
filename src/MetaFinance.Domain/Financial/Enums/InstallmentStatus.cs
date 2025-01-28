@@ -2,7 +2,7 @@
 
 public enum InstallmentStatus
 {
-    Pending,
+    Pending = 1,
     Paid,
     Cancelled
 }

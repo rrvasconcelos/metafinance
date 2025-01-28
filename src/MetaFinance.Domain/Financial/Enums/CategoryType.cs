@@ -2,7 +2,7 @@
 
 public enum CategoryType
 {
-    Essential,
+    Essential = 1,
     NonEssential,
     Investment,
     Income,
